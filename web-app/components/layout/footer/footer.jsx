@@ -8,6 +8,7 @@ export default function Footer() {
         <Link
           href="https://tomwalsh96.com"
           target="_blank"
+          passHref
         >
           Built by
           <div className={styles.name}>

@@ -9,6 +9,7 @@ export default function Navbar() {
       <div className={styles.navbar}>
         <Link
           href="/"
+          passHref
         >
           <span className={styles.logo}>
             <Image src="/logo-512x512.png" alt="" width={50} height={50} />
@@ -18,6 +19,7 @@ export default function Navbar() {
         <div className={styles.menu}>
           <Link
             href="/data"
+            passHref
           >
             <Button colorScheme="green" variant="ghost" size="lg">
               Data
