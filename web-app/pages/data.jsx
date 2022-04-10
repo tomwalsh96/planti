@@ -46,10 +46,13 @@ export default function Data() {
 
         <div className={styles.grid}>
           { logs.map((log) => (
-              <a href="#" className={styles.card}>
+              <div
+                key={log.id}
+                className={styles.card}
+              >
                 <p className={styles.time}>{timestampFormatted(log.time)}.</p>
                 <p className={styles.message}>The soil was {log.status}.</p>
-              </a>
+              </div>
             ))
           }
         </div>
