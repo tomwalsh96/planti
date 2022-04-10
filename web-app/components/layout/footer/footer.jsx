@@ -10,10 +10,12 @@ export default function Footer() {
           target="_blank"
           passHref
         >
-          Built by
-          <div className={styles.name}>
-            Tom Walsh
-          </div>
+          <a>
+            Built by
+            <div className={styles.name}>
+              Tom Walsh
+            </div>
+          </a>
         </Link>
       </footer>
     </>
