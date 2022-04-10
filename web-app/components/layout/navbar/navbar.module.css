@@ -1,0 +1,49 @@
+.navbar {
+  display: flex;
+  flex: 1;
+  border-bottom: 1px solid #eaeaea;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.navbar .logolink {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  flex-grow: 1;
+}
+
+
+.navbar .logo {
+  padding: 0 1rem 0 3rem; 
+}
+
+.navbar .title {
+  font-weight: 600;
+  font-size: 3rem;
+}
+
+.navbar .title:hover {
+  color: #38A169;
+}
+
+
+/* .card:hover,
+.card:focus,
+.card:active {
+  font-style: #38A169;
+} */
+
+.navbar .menu {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  flex-grow: 1;
+  padding: 0 5rem 0 0;
+}
+
+.navbar .item {
+  font-weight: 500;
+  font-size: 2rem;
+}
