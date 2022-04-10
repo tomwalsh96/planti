@@ -42,7 +42,7 @@ export default function Data() {
       </Head>
 
       <main className={styles.main}>
-        <h1>Data Logs</h1>
+        <h1 className={styles.title}>Data Logs</h1>
 
         <div className={styles.grid}>
           { logs.map((log) => (

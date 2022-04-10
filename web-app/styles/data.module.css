@@ -11,6 +11,12 @@
   align-items: center;
 }
 
+.title {
+  margin: 1rem 0;
+  line-height: 1.15;
+  font-size: 3rem;
+}
+
 .grid {
   display: flex;
   align-items: center;
@@ -28,7 +34,8 @@
   border: 1px solid #eaeaea;
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
-  min-width: 800px;
+  width: 800px;
+  max-width: 70vw;
 }
 
 .card:hover {
