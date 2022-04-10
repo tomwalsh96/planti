@@ -11,7 +11,7 @@ export default function Navbar() {
           href="/"
           passHref
         >
-          <a>
+          <a className={styles.logolink}>
             <span className={styles.logo}>
               <Image src="/logo-512x512.png" alt="" width={50} height={50} />
             </span>
