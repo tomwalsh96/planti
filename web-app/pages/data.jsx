@@ -2,7 +2,7 @@ import Head from 'next/head'
 import styles from '../styles/data.module.css'
 import { firestore } from '../services/firebase';
 import { collection, orderBy, limit, query, onSnapshot } from "firebase/firestore";
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export default function Data() {
 

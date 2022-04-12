@@ -1,9 +1,20 @@
 import styles from './navbar.module.css'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Button } from '@chakra-ui/react'
+import {
+  Button,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuGroup,
+  MenuDivider
+} from '@chakra-ui/react'
+import useAuth from '../../../context/AuthUserContext'
+import { auth, signOut } from '../../../services/firebase';
 
 export default function Navbar() {
+
   return (
     <>
       <div className={styles.navbar}>
@@ -18,7 +29,7 @@ export default function Navbar() {
             <div className={styles.title}>Planti</div>
           </a>
         </Link>
-        <div className={styles.menu}>
+        {/* <div className={styles.menu}>
           <Link
             href="/data"
             passHref
@@ -29,7 +40,25 @@ export default function Navbar() {
               </Button>
             </a>
           </Link>
-        </div>
+        </div> */}
+
+        {useAuth().user && (
+          <Menu>
+            <MenuButton as={Button} colorScheme='pink'>
+              Profile
+            </MenuButton>
+            <MenuList>
+              <MenuGroup title='Profile'>
+                <MenuItem>My Account</MenuItem>
+                <MenuItem>Payments </MenuItem>
+              </MenuGroup>
+              <MenuDivider />
+              <MenuGroup>
+                <MenuItem onClick={()=>signOut(auth)}>Logout</MenuItem>
+              </MenuGroup>
+            </MenuList>
+          </Menu>
+        )}
       </div>
     </>
   )

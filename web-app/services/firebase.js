@@ -1,8 +1,7 @@
-// import firebase from "firebase/app";
-// import "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -14,17 +13,23 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
-let analytics; let firestore;
+let analytics;
+let firestore;
+let auth;
+
 if (firebaseConfig?.projectId) {
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
 
-if (app.name && typeof window !== 'undefined') {
-  analytics = getAnalytics(app);
+  if (app.name && typeof window !== 'undefined') {
+    analytics = getAnalytics(app);
+  }
+
+  // Access Firebase services using shorthand notation
+  firestore = getFirestore(app);
+
+  auth = getAuth(app);
+
 }
 
-// Access Firebase services using shorthand notation
-firestore = getFirestore(app);
-}
-
-export {analytics, firestore};
+export {analytics, firestore, auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut };

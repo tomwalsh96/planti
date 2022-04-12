@@ -1,9 +1,11 @@
 import Head from 'next/head'
 import styles from '../styles/home.module.css'
-import { Button, ButtonGroup } from '@chakra-ui/react'
 import Link from 'next/link'
+import GetStartedModal from '../components/getStartedModal/getStartedModal'
+
 
 export default function Home() {
+
   return (
     <div className={styles.container}>
       <Head>
@@ -21,14 +23,7 @@ export default function Home() {
           Your house plant manager
         </p>
 
-        <ButtonGroup direction='row' spacing={4} align='center' className={styles.start}>
-          <Button colorScheme='green' variant='solid'>
-            Signup
-          </Button>
-          <Button colorScheme='green' variant='outline'>
-            Login
-          </Button>
-        </ButtonGroup>
+        <GetStartedModal />
 
         <div className={styles.info}>
 
