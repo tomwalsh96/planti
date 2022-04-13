@@ -1,16 +1,16 @@
 import Layout from '../components/layout/layout.jsx'
 import '../styles/globals.css'
 import { ChakraProvider } from '@chakra-ui/react'
-import { AuthUserProvider } from '../context/AuthUserContext';
+import { AuthProvider } from "../context/AuthContext";
 
 export default function MyApp({ Component, pageProps }) {
   return (
-    <AuthUserProvider>
+    <AuthProvider>
       <ChakraProvider>
         <Layout>
           <Component {...pageProps} />
         </Layout>
       </ChakraProvider>
-    </AuthUserProvider>
+    </AuthProvider>
   )
 }

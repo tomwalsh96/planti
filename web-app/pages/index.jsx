@@ -3,7 +3,6 @@ import styles from '../styles/home.module.css'
 import Link from 'next/link'
 import GetStartedModal from '../components/getStartedModal/getStartedModal'
 
-
 export default function Home() {
 
   return (

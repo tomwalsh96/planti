@@ -8,12 +8,16 @@ import {
   MenuList,
   MenuItem,
   MenuGroup,
-  MenuDivider
+  MenuDivider,
+  Avatar,
+  AvatarBadge,
+  AvatarGroup
 } from '@chakra-ui/react'
-import useAuth from '../../../context/AuthUserContext'
-import { auth, signOut } from '../../../services/firebase';
+import { useAuth } from "../../../context/AuthContext"
 
 export default function Navbar() {
+
+  const { user, logout } = useAuth();
 
   return (
     <>
@@ -42,22 +46,23 @@ export default function Navbar() {
           </Link>
         </div> */}
 
-        {useAuth().user && (
-          <Menu>
-            <MenuButton as={Button} colorScheme='pink'>
-              Profile
-            </MenuButton>
-            <MenuList>
-              <MenuGroup title='Profile'>
-                <MenuItem>My Account</MenuItem>
-                <MenuItem>Payments </MenuItem>
-              </MenuGroup>
-              <MenuDivider />
-              <MenuGroup>
-                <MenuItem onClick={()=>signOut(auth)}>Logout</MenuItem>
-              </MenuGroup>
-            </MenuList>
-          </Menu>
+        {user && (
+          <div className={styles.userMenu}>
+            <Menu>
+              <MenuButton as={Button} colorScheme='pink'>
+                {user.email}
+              </MenuButton>
+              <MenuList>
+                <MenuGroup title='Profile'>
+                  <MenuItem>Dashboard</MenuItem>
+                </MenuGroup>
+                <MenuDivider />
+                <MenuGroup>
+                  <MenuItem onClick={logout}>Logout</MenuItem>
+                </MenuGroup>
+              </MenuList>
+            </Menu>
+          </div>
         )}
       </div>
     </>

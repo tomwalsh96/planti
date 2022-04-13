@@ -112,10 +112,13 @@ export default function GetStartedModal() {
         setIsLoading(false);
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode);
-        console.log(errorMessage);
+        if ( error.code == "auth/user-not-found") {
+          setLoginError("User not found.")
+        } else if ( error.code == "auth/wrong-password" ) {
+          setLoginError("Password incorrect.")
+        } else {
+          setLoginError(error.message)
+        }
         setIsLoading(false);
       });
   };
