@@ -54,7 +54,16 @@ export default function Navbar() {
               </MenuButton>
               <MenuList>
                 <MenuGroup title='Profile'>
-                  <MenuItem>Dashboard</MenuItem>
+                  <MenuItem>
+                  <Link
+                    href="/dashboard"
+                    passHref
+                  >
+                    <a>
+                      <div >Dashboard</div>
+                    </a>
+                  </Link>
+                  </MenuItem>
                 </MenuGroup>
                 <MenuDivider />
                 <MenuGroup>

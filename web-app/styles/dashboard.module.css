@@ -1,0 +1,55 @@
+.container {
+  padding: 0 2rem;
+}
+
+.main {
+  min-height: 100vh;
+  padding: 2rem 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  margin: 1rem 0;
+  line-height: 1.15;
+  font-size: 3rem;
+}
+
+/* .grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 800px;
+}
+
+.card {
+  margin: 1rem;
+  padding: 1.5rem;
+  text-align: left;
+  color: inherit;
+  text-decoration: none;
+  border: 1px solid #eaeaea;
+  border-radius: 10px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+  width: 800px;
+  max-width: 70vw;
+}
+
+.card:hover {
+  color: #0070f3;
+  border-color: #0070f3;
+}
+
+.card .time {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.7rem;
+}
+
+.card .message {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+} */

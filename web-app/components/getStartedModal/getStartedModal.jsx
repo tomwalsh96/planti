@@ -36,11 +36,8 @@ import {
   Form,
   Field } from 'formik'
 import { useState } from 'react';
-
-// auth stuff
 import { useRouter } from 'next/router';
 import { auth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from '../../services/firebase';
-// import { useAuth  from '../../../context/AuthUserContext'
 
 
 
@@ -53,16 +50,7 @@ export default function GetStartedModal() {
   const [showPass, setShowPass] = useState(false)
   const showPassToggle = () => setShowPass(!showPass)
 
-  // email validation
-  function validateEmail(value) {
-    let error
-    if (!value) {
-      error = "Email is required"
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-      error = "Invalid email address"
-    }
-    return error
-  }
+  const router = useRouter()
 
   // // email and password states
   const [email, setEmail] = useState('');
@@ -77,10 +65,9 @@ export default function GetStartedModal() {
     if (password === confirmation)
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          // const user = userCredential.user;
-          console.log("User signed up. Need to add functionality still.")
           setIsLoading(false);
-          // useRouter().push("/dashboard");
+          onClose();
+          router.push("/dashboard");
         })
         .catch(error => {
           if (error.code == "auth/email-already-in-use") {
@@ -107,9 +94,9 @@ export default function GetStartedModal() {
     setIsLoading(true);
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // const user = userCredential.user;
-        console.log("User logged in. Need to add functionality still.")
         setIsLoading(false);
+        onClose();
+        router.push("/dashboard");
       })
       .catch((error) => {
         if ( error.code == "auth/user-not-found") {
@@ -138,6 +125,7 @@ export default function GetStartedModal() {
       <Modal
         isOpen={isOpen}
         onClose={onClose}
+        trapFocus={false}
         isCentered
         size="xl"
       >
