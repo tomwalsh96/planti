@@ -69,7 +69,7 @@ export default function Dashboard() {
                     </Box>
 
                     <Box color='gray.600' fontSize='sm'>
-                      Temperature: {plant.temperature}%
+                      Temperature: {plant.temperature}°C
                     </Box>
 
                     <Box color='gray.600' fontSize='sm'>
