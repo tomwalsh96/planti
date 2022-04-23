@@ -12,7 +12,7 @@ const AuthContext = createContext(authContextDefaultValues);
 
 export function useAuth() {
   return useContext(AuthContext);
-}
+};
 
 
 export function AuthProvider({ children }) {
@@ -39,4 +39,4 @@ export function AuthProvider({ children }) {
     logout,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-}
+};

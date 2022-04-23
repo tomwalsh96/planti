@@ -1,7 +1,5 @@
-import styles from '../styles/dashboard.module.css'
-
-import Head from 'next/head'
-
+import styles from '../styles/dashboard.module.css';
+import Head from 'next/head';
 import {
   Heading,
   Text,
@@ -12,7 +10,12 @@ import {
   WrapItem,
   AspectRatio,
   Flex
-} from '@chakra-ui/react'
+} from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import { useAuth } from "../context/AuthContext";
+import {
+  useEffect
+} from 'react';
 
 export default function Dashboard() {
 
@@ -21,6 +24,16 @@ export default function Dashboard() {
     {id: "eric-1", name: "eric", reservoir: "35", temperature: "12", humidity: "40", imageUrl: "https://media.istockphoto.com/photos/houseplant-in-black-pot-isolated-on-white-background-picture-id519687055?k=20&m=519687055&s=612x612&w=0&h=XicWya0KCKUcvZnUeTssoTwcs1RNmewKcDBIo3WysEY=" },
     {id: "stan-1", name: "stan", reservoir: "80", temperature: "12", humidity: "40", imageUrl: "https://media.istockphoto.com/photos/decorative-banana-plant-in-stone-marble-vase-isolated-on-white-3d-picture-id1144381259?k=20&m=1144381259&s=612x612&w=0&h=2uFbUJ0GnnNcsShJVda7cHD_in7I84pt_3hOolHQz_k=" }
   ]
+
+  const { user } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+
+    if (!user) {
+      router.replace("/");
+    }
+  }, [user]);
 
   return(
     <div className={styles.container}>
@@ -85,4 +98,4 @@ export default function Dashboard() {
       </main>
     </div>
   )
-}
+};

@@ -26,11 +26,11 @@ import {
   AlertTitle,
   AlertDescription,
   CircularProgress
-} from '@chakra-ui/react'
+} from '@chakra-ui/react';
 import {
   ViewIcon,
   ViewOffIcon
-} from '@chakra-ui/icons'
+} from '@chakra-ui/icons';
 import {
   Formik,
   Form,
@@ -44,13 +44,13 @@ import { auth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from
 export default function GetStartedModal() {
 
   // open/close modal
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   // toggle password visibility
-  const [showPass, setShowPass] = useState(false)
-  const showPassToggle = () => setShowPass(!showPass)
+  const [showPass, setShowPass] = useState(false);
+  const showPassToggle = () => setShowPass(!showPass);
 
-  const router = useRouter()
+  const router = useRouter();
 
   // // email and password states
   const [email, setEmail] = useState('');

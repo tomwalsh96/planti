@@ -1,7 +1,7 @@
-import Head from 'next/head'
-import styles from '../styles/home.module.css'
-import Link from 'next/link'
-import GetStartedModal from '../components/getStartedModal/getStartedModal'
+import Head from 'next/head';
+import styles from '../styles/home.module.css';
+import Link from 'next/link';
+import GetStartedModal from '../components/getStartedModal/getStartedModal';
 
 export default function Home() {
 
@@ -62,4 +62,4 @@ export default function Home() {
 
     </div>
   )
-}
+};

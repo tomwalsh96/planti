@@ -1,5 +1,5 @@
-import Image from 'next/image'
-import Link from 'next/link'
+import Image from 'next/image';
+import Link from 'next/link';
 import {
   Flex,
   Spacer,
@@ -15,11 +15,9 @@ import {
   Center,
   Avatar,
   Box
-} from '@chakra-ui/react'
-import {
-  HamburgerIcon
-} from '@chakra-ui/icons'
-import { useAuth } from "../../context/AuthContext"
+} from '@chakra-ui/react';
+import { HamburgerIcon } from '@chakra-ui/icons';
+import { useAuth } from "../../context/AuthContext";
 import {
   useState,
   useCallback,
@@ -141,4 +139,4 @@ export default function Navbar() {
       </Flex>
     </>
   )
-}
+};
