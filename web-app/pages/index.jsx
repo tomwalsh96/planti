@@ -52,7 +52,7 @@ export default function Home() {
           >
             <a className={styles.card}>
               <h2>Social &rarr;</h2>
-              <p>Upload your own creation and discover see what others built.</p>
+              <p>Upload your own creation and see what others built.</p>
             </a>
           </Link>
           

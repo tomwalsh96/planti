@@ -1,6 +1,8 @@
 import styles from './getStartedModal.module.css'
 import {
   Button,
+  ButtonGroup,
+  IconButton,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -25,37 +27,50 @@ import {
   AlertIcon,
   AlertTitle,
   AlertDescription,
-  CircularProgress
+  CircularProgress,
+  Box,
+  Center,
+  Flex,
+  Spacer,
+  Divider,
+  Text,
+  Stack
 } from '@chakra-ui/react';
 import {
   ViewIcon,
   ViewOffIcon
 } from '@chakra-ui/icons';
+import { FcGoogle } from "react-icons/fc";
+import { GoogleButton } from 'react-google-button';
 import {
   Formik,
   Form,
   Field } from 'formik'
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { auth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from '../../services/firebase';
+import { auth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword } from '../../services/firebase';
 
 
 
 export default function GetStartedModal() {
 
-  // open/close modal
+  // states
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  // toggle password visibility
-  const [showPass, setShowPass] = useState(false);
-  const showPassToggle = () => setShowPass(!showPass);
-
-  const router = useRouter();
-
-  // // email and password states
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmation, setConfirmation] = useState("");
+  const [showPass, setShowPass] = useState(false);
+  const [signupError, setSignupError] = useState('');
+  const [loginError, setLoginError] = useState('');
+  const [googleError, setGoogleError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingGoogle, setIsLoadingGoogle] = useState(false);
+
+  // toggle password visibility
+  const showPassToggle = () => setShowPass(!showPass);
+
+  // init router
+  const router = useRouter();
 
   // login submission
   const handleSignup = async event => {
@@ -91,6 +106,7 @@ export default function GetStartedModal() {
   const handleLogin = async event => {
     event.preventDefault();
     setLoginError(null);
+    setGoogleError(null);
     setIsLoading(true);
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -110,10 +126,26 @@ export default function GetStartedModal() {
       });
   };
 
-  // temp error handling
-  const [signupError, setSignupError] = useState('');
-  const [loginError, setLoginError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  // google authentication
+  const googleAuth = async event => {
+    event.preventDefault();
+    setLoginError(null);
+    setGoogleError(null);
+    setIsLoadingGoogle(true);
+    signInWithPopup(auth, new GoogleAuthProvider())
+      .then((result) => {
+        setIsLoadingGoogle(false);
+        onClose();
+        router.push("/dashboard");
+      }).catch((error) => {
+        if ( error.code == "auth/popup-closed-by-user") {
+          setGoogleError("Popup closed by user.");
+        }  else {
+          setGoogleError(error.message);
+        }
+        setIsLoadingGoogle(false);
+      });
+  }
 
   return (
     <>
@@ -143,12 +175,109 @@ export default function GetStartedModal() {
               <TabList
                 mb='1em'
               >
-                <Tab>Signup</Tab>
                 <Tab>Login</Tab>
+                <Tab>Signup</Tab>
               </TabList>
               <TabPanels
                 className={styles.tabPanels}
               >
+                <TabPanel>
+                  <Formik>
+                    <form onSubmit={handleLogin}>
+                      <FormControl isRequired>
+                        <FormLabel>Email</FormLabel>
+                        <Input
+                          type="email"
+                          placeholder="email@address.com"
+                          onChange={event => setEmail(event.currentTarget.value)}
+                        />
+                      </FormControl>
+                      <FormControl isRequired mt={6}>
+                        <FormLabel>Password</FormLabel>
+                        <InputGroup>
+                          <Input
+                            type={showPass ? 'text' : 'password'}
+                            placeholder="password"
+                            onChange={event => setPassword(event.currentTarget.value)}
+                          />
+                          <InputRightElement width="3rem">
+                            <Button h="1.5rem" size="sm" onClick={showPassToggle}>
+                              {showPass ? <ViewIcon /> : <ViewOffIcon />}
+                            </Button>
+                          </InputRightElement>
+                        </InputGroup>
+                      </FormControl>
+                      <Button
+                        colorScheme="green"
+                        variant="solid"
+                        type="submit"
+                        width="full"
+                        mt={4}
+                      >
+                        {isLoading ? (
+                          <CircularProgress isIndeterminate size="24px" color="green" />
+                        ) : (
+                          'Log in'
+                        )}
+                      </Button>
+                      {loginError && (
+                        <Alert
+                          mt={4}
+                          status='error'
+                        >
+                        <AlertIcon />
+                        <AlertTitle>{loginError}</AlertTitle>
+                        <AlertDescription>Try again.</AlertDescription>
+                      </Alert>
+                      )}
+                    </form>
+                  </Formik>
+                  <Box
+                    pt="4"
+                    pb="2"
+                  >
+                    <Flex
+                      align="center"
+                    >
+                      <Divider />
+                      <Text p="3">or</Text>
+                      <Divider />
+                    </Flex>
+                    <ButtonGroup
+                      isAttached
+                      variant='outline'
+                      width="full"
+                      mt={4}
+                    >
+                      <IconButton
+                        icon={<FcGoogle />}
+                        onClick={googleAuth}
+                      />
+                      <Button
+                        colorScheme="blue"
+                        variant="solid"
+                        width="full"
+                        onClick={googleAuth}
+                      >
+                        {isLoadingGoogle ? (
+                          <CircularProgress isIndeterminate size="24px" colorScheme="blue" />
+                        ) : (
+                          'Log in with Google'
+                        )}
+                      </Button>
+                    </ButtonGroup>
+                    {googleError && (
+                        <Alert
+                          mt={4}
+                          status='error'
+                        >
+                        <AlertIcon />
+                        <AlertTitle>{googleError}</AlertTitle>
+                        <AlertDescription>Try again.</AlertDescription>
+                      </Alert>
+                      )}
+                  </Box>
+                </TabPanel>
                 <TabPanel>
                   <Formik>
                     <form onSubmit={handleSignup}>
@@ -189,6 +318,19 @@ export default function GetStartedModal() {
                           </InputRightElement>
                         </InputGroup>
                       </FormControl>
+                      <Button
+                        colorScheme="green"
+                        variant="solid"
+                        type="submit"
+                        width="full"
+                        mt={4}
+                      >
+                        {isLoading ? (
+                          <CircularProgress isIndeterminate size="24px" color="teal" />
+                        ) : (
+                          'Sign up'
+                        )}
+                      </Button>
                       {signupError && (
                         <Alert
                           mt={4}
@@ -199,85 +341,53 @@ export default function GetStartedModal() {
                         <AlertDescription>Try again.</AlertDescription>
                       </Alert>
                       )}
-                      <Button
-                        colorScheme="green"
-                        variant="solid"
-                        type="submit"
-                        width="full"
-                        mt={4}
-                      >
-                        {isLoading ? (
-                          <CircularProgress isIndeterminate size="24px" color="teal" />
-                        ) : (
-                          'Sign Up'
-                        )}
-                      </Button>
                     </form>
                   </Formik>
-                  <div
-                    className={styles.federatedProvider}
+                  <Box
+                    pt="4"
+                    pb="2"
                   >
-                    <p>- or -</p>
-                    <p>Signup with Google</p>
-                  </div>
-                </TabPanel>
-                <TabPanel>
-                  <Formik>
-                    <form onSubmit={handleLogin}>
-                      <FormControl isRequired>
-                        <FormLabel>Email</FormLabel>
-                        <Input
-                          type="email"
-                          placeholder="email@address.com"
-                          onChange={event => setEmail(event.currentTarget.value)}
-                        />
-                      </FormControl>
-                      <FormControl isRequired mt={6}>
-                        <FormLabel>Password</FormLabel>
-                        <InputGroup>
-                          <Input
-                            type={showPass ? 'text' : 'password'}
-                            placeholder="password"
-                            onChange={event => setPassword(event.currentTarget.value)}
-                          />
-                          <InputRightElement width="3rem">
-                            <Button h="1.5rem" size="sm" onClick={showPassToggle}>
-                              {showPass ? <ViewIcon /> : <ViewOffIcon />}
-                            </Button>
-                          </InputRightElement>
-                        </InputGroup>
-                      </FormControl>
-                      {loginError && (
+                    <Flex
+                      align="center"
+                    >
+                      <Divider />
+                      <Text p="3">or</Text>
+                      <Divider />
+                    </Flex>
+                    <ButtonGroup
+                      isAttached
+                      variant='outline'
+                      width="full"
+                      mt={4}
+                    >
+                      <IconButton
+                        icon={<FcGoogle />}
+                        onClick={googleAuth}
+                      />
+                      <Button
+                        colorScheme="blue"
+                        variant="solid"
+                        width="full"
+                        onClick={googleAuth}
+                      >
+                        {isLoadingGoogle ? (
+                          <CircularProgress isIndeterminate size="24px" colorScheme="blue" />
+                        ) : (
+                          'Sign up with Google'
+                        )}
+                      </Button>
+                    </ButtonGroup>
+                    {googleError && (
                         <Alert
                           mt={4}
                           status='error'
                         >
                         <AlertIcon />
-                        <AlertTitle>{loginError}</AlertTitle>
+                        <AlertTitle>{googleError}</AlertTitle>
                         <AlertDescription>Try again.</AlertDescription>
                       </Alert>
                       )}
-                      <Button
-                        colorScheme="green"
-                        variant="solid"
-                        type="submit"
-                        width="full"
-                        mt={4}
-                      >
-                        {isLoading ? (
-                          <CircularProgress isIndeterminate size="24px" color="teal" />
-                        ) : (
-                          'Log In'
-                        )}
-                      </Button>
-                    </form>
-                  </Formik>
-                  <div
-                    className={styles.federatedProvider}
-                  >
-                    <p>- or -</p>
-                    <p>Login with Google</p>
-                  </div>
+                  </Box>
                 </TabPanel>
               </TabPanels>
             </Tabs>
