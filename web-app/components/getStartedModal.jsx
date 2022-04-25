@@ -1,4 +1,3 @@
-import styles from './getStartedModal.module.css'
 import {
   Button,
   ButtonGroup,
@@ -6,8 +5,6 @@ import {
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
   Tabs,
@@ -17,8 +14,6 @@ import {
   TabPanel,
   FormControl,
   FormLabel,
-  FormErrorMessage,
-  FormHelperText,
   Input,
   InputGroup,
   InputRightElement,
@@ -29,26 +24,19 @@ import {
   AlertDescription,
   CircularProgress,
   Box,
-  Center,
   Flex,
-  Spacer,
   Divider,
-  Text,
-  Stack
-} from '@chakra-ui/react';
+  Text
+} from "@chakra-ui/react";
 import {
   ViewIcon,
   ViewOffIcon
-} from '@chakra-ui/icons';
+} from "@chakra-ui/icons";
 import { FcGoogle } from "react-icons/fc";
-import { GoogleButton } from 'react-google-button';
-import {
-  Formik,
-  Form,
-  Field } from 'formik'
-import { useState } from 'react';
-import { useRouter } from 'next/router';
-import { auth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword } from '../../services/firebase';
+import { Formik } from "formik";
+import { useState } from "react";
+import { useRouter } from "next/router";
+import { auth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword } from "../services/firebase";
 
 
 
@@ -168,7 +156,8 @@ export default function GetStartedModal() {
           <ModalCloseButton />
           <ModalBody>
             <Tabs
-              className={styles.tabs}
+              pt="10"
+              pb="4"
               variant='line'
               colorScheme='green'
             >
@@ -178,9 +167,7 @@ export default function GetStartedModal() {
                 <Tab>Login</Tab>
                 <Tab>Signup</Tab>
               </TabList>
-              <TabPanels
-                className={styles.tabPanels}
-              >
+              <TabPanels>
                 <TabPanel>
                   <Formik>
                     <form onSubmit={handleLogin}>

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState } from "react";
 import { auth } from "../services/firebase";
 import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
@@ -20,16 +20,14 @@ export function AuthProvider({ children }) {
 
   const logout = () => {
     auth.signOut();
-    console.log("User logged out.");
   };
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        setUser(user)
-        console.log("User logged in.")
+        setUser(user);
       } else {
-        setUser(null)
+        setUser(null);
       }
     });
   }, []);
