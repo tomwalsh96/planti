@@ -138,7 +138,11 @@ export default function GetStartedModal() {
   return (
     <>
 
-      <Button onClick={onOpen} colorScheme='green' variant='solid'>
+      <Button
+        onClick={onOpen}
+        colorScheme="green"
+        variant="solid"
+      >
         Get Started
       </Button>
 
@@ -158,11 +162,11 @@ export default function GetStartedModal() {
             <Tabs
               pt="10"
               pb="4"
-              variant='line'
-              colorScheme='green'
+              variant="line"
+              colorScheme="green"
             >
               <TabList
-                mb='1em'
+                mb="1em"
               >
                 <Tab>Login</Tab>
                 <Tab>Signup</Tab>
@@ -383,4 +387,4 @@ export default function GetStartedModal() {
       </Modal>
     </>
   )
-}
+};
