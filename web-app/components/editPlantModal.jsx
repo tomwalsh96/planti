@@ -10,7 +10,8 @@ import {
   Input,
   useDisclosure,
   Divider,
-  Text
+  Text,
+  MenuItem
 } from "@chakra-ui/react";
 import {
   AddIcon
@@ -19,53 +20,46 @@ import { Formik } from "formik";
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { firestore } from "../services/firebase";
-import { collection, addDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import HardwareSetup from "./hardwareSetup";
 
 
 
-export default function NewPlantModal() {
+export default function EditPlantModal(props) {
+
+  const { oldName, userID, plantID } = props;
 
   // states
-  const { isOpen: isOpenNew, onOpen: onOpenNew, onClose: onCloseNew} = useDisclosure();
-  const [plantName, setPlantName] = useState('');
-  const [plantID, setPlantID] = useState('');
-  const [isCreated, setIsCreated] = useState(false);
+  const { isOpen: isOpenEdit, onOpen: onOpenEdit, onClose: onCloseEdit} = useDisclosure();
+  // const { isOpen: isOpenNew, onOpen: onOpenNew, onClose: onCloseNew} = useDisclosure();
+  const [newPlantName, setNewPlantName] = useState(oldName);
 
-  const { user } = useAuth();
-
-  // function to add new plant to user account
-  const addPlant = async event => {
+  // function to add edit plant
+  const editPlant = async event => {
     event.preventDefault();
-    const plant = await addDoc(collection(firestore, "users", user.uid, "plants"), {
-      name: plantName,
+    await setDoc(doc(firestore, "users", userID, "plants", plantID), {
+      name: newPlantName,
       reservoir: 0,
       temperature: 0,
       humidity: 0,
       imageUrl: "https://media.istockphoto.com/photos/house-plantficus-high-variegata-picture-id187359443?k=20&m=187359443&s=612x612&w=0&h=HzAAvIB-C7CsXHWowlx94MbmdC_o2tlt4WqVtvjOQ6o="
     });
-    setPlantID(plant.id);
-    setIsCreated(true);
+    onCloseEdit();
   };
 
 
   return (
     <>
 
-      <Button
-        leftIcon={<AddIcon />}
-        colorScheme="green"
-        onClick={onOpenNew}
+      <MenuItem
+        onClick={onOpenEdit}
       >
-        New plant
-      </Button>
+        Edit Name
+      </MenuItem>
 
       <Modal
-        isOpen={isOpenNew}
-        onClose={() => {
-          setIsCreated(false);
-          onCloseNew();
-        }}
+        isOpen={isOpenEdit}
+        onClose={onCloseEdit}
         trapFocus={false}
         isCentered
         size="xl"
@@ -79,26 +73,25 @@ export default function NewPlantModal() {
             pt="10"
             pb="6"
           >
-          {!isCreated ? (
-            <>
-              <Text
-              mb="1"
-                fontSize="2xl"
-                fontWeight="bold"
-              >
-                Step 1
-              </Text>
-              <Divider
-                mb="5"
-              ></Divider>
-              <Formik>
-              <form onSubmit={addPlant}>
+            <Text
+            mb="1"
+              fontSize="2xl"
+              fontWeight="bold"
+            >
+              Edit Plant
+            </Text>
+            <Divider
+              mb="5"
+            ></Divider>
+            <Formik>
+              <form onSubmit={editPlant}>
                 <FormControl isRequired>
-                  <FormLabel>Plant Name</FormLabel>
+                  <FormLabel>New Plant Name</FormLabel>
                   <Input
                     type="text"
-                    placeholder="name"
-                    onChange={event => setPlantName(event.currentTarget.value)}
+                    placeholder={oldName}
+                    value={newPlantName}
+                    onChange={event => setNewPlantName(event.currentTarget.value)}
                   />
                 </FormControl>
                 <Button
@@ -108,14 +101,10 @@ export default function NewPlantModal() {
                   width="full"
                   mt={4}
                 >
-                  Add
+                  Edit
                 </Button>
               </form>
             </Formik>
-            </>
-          ) : (
-            <HardwareSetup heading={"Step 2"} userID={user.uid} plantID={plantID}/>
-          )}
           </ModalBody>
         </ModalContent>
       </Modal>
