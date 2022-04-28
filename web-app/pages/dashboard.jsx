@@ -34,7 +34,7 @@ import {
 } from "react";
 import NewPlantModal from "../components/newPlantModal";
 import { useState } from "react";
-import { firestore } from '../services/firebase';
+import { firestore } from "../services/firebase";
 import { collection, query, onSnapshot, doc, deleteDoc } from "firebase/firestore";
 import HardwareSetup from "../components/hardwareSetup";
 import EditPlantModal from "../components/editPlantModal";
@@ -103,38 +103,38 @@ export default function Dashboard() {
       <Wrap
         minHeight="90vh"
         p="2rem"
-        spacing='2rem'
-        justify='center'
+        spacing="2rem"
+        justify="center"
       >
         {plants.map((plant) => 
           <WrapItem
             key={plant.id}
           >
             <Box
-              maxW='sm'
-              borderWidth='1px'
-              borderRadius='lg'
-              overflow='hidden'
-              w='30rem'
-              h='20rem'
-              boxShadow='md'
+              maxW="sm"
+              borderWidth="1px"
+              borderRadius="lg"
+              overflow="hidden"
+              w="30rem"
+              h="20rem"
+              boxShadow="md"
             >
               <Flex>
                 <AspectRatio w="12rem" h="20rem" ratio={4 / 3}>
                   <Image src={plant.data().imageUrl}/>
                 </AspectRatio>
                 <Box
-                  p='6'
+                  p="6"
                 >
                   <Box
-                    display='flex'
-                    alignItems='baseline'
+                    display="flex"
+                    alignItems="baseline"
                   >
                     <Box
-                      mt='1'
-                      fontWeight='semibold'
-                      as='h4'
-                      lineHeight='tight'
+                      mt="1"
+                      fontWeight="semibold"
+                      as="h4"
+                      lineHeight="tight"
                       isTruncated
                       width="8rem"
                     >
@@ -144,25 +144,25 @@ export default function Dashboard() {
 
                   {plant.data().reservoir <= 20 &&
                     <Badge
-                      borderRadius='full'
-                      px='2'
+                      borderRadius="full"
+                      px="2"
                       mt="1"
                       mb="3"
-                      colorScheme='red'
+                      colorScheme="red"
                     >
                       Needs Water
                     </Badge>
                   }
 
-                  <Box color='gray.600' fontSize='sm'>
+                  <Box color="gray.600" fontSize="sm">
                     Reservoir: {plant.data().reservoir}%
                   </Box>
 
-                  <Box color='gray.600' fontSize='sm'>
+                  <Box color="gray.600" fontSize="sm">
                     Temperature: {plant.data().temperature}°C
                   </Box>
 
-                  <Box color='gray.600' fontSize='sm'>
+                  <Box color="gray.600" fontSize="sm">
                     Humidity: {plant.data().humidity}%
                   </Box>
 

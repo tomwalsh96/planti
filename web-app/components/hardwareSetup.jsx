@@ -22,7 +22,7 @@ export default function HardwareSetup(props) {
       <Text
         mb="4"
       >
-        Connect your hardware using the following ID's:
+        Connect your hardware using the following IDs:
       </Text>
       <Text
         fontWeight="bold"
