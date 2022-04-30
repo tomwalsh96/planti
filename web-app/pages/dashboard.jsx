@@ -87,17 +87,17 @@ export default function Dashboard() {
       </Head>
 
       <Center mt="2rem">
-        <Heading>
+        <Heading maxW="80vw">
           Dashboard
         </Heading>
       </Center>
       <Center my="1rem">
-        <Text>
+        <Text maxW="80vw" align="center">
           All your plants and their current stats are displayed here.
         </Text>
       </Center>
       <Center mb="2rem">
-        <NewPlantModal />
+        <NewPlantModal maxW="80vw"/>
       </Center>
         
       <Wrap
@@ -111,7 +111,8 @@ export default function Dashboard() {
             key={plant.id}
           >
             <Box
-              maxW="sm"
+              maxW="85vw"
+              minW="330px"
               borderWidth="1px"
               borderRadius="lg"
               overflow="hidden"
