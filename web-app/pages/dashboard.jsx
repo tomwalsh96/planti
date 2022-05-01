@@ -22,7 +22,8 @@ import {
   ModalOverlay,
   ModalContent,
   ModalBody,
-  ModalCloseButton
+  ModalCloseButton,
+  Spacer
 } from "@chakra-ui/react";
 import {
   SettingsIcon
@@ -168,6 +169,7 @@ export default function Dashboard() {
                   </Box>
 
                 </Box>
+                <Spacer />
                 <Menu>
                   <MenuButton
                     as={IconButton}

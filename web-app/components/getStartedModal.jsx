@@ -36,7 +36,8 @@ import { FcGoogle } from "react-icons/fc";
 import { Formik } from "formik";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { auth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword } from "../services/firebase";
+import { auth, firestore, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword } from "../services/firebase";
+import { setDoc, doc } from "firebase/firestore";
 
 
 
@@ -60,6 +61,15 @@ export default function GetStartedModal() {
   // init router
   const router = useRouter();
 
+  // create user in firestore
+  async function createUser(id, name, email) {
+    await setDoc(doc(firestore, "users", id), {
+      id: id,
+      name: name,
+      email: email
+    });
+  };
+
   // login submission
   const handleSignup = async event => {
     event.preventDefault();
@@ -68,6 +78,7 @@ export default function GetStartedModal() {
     if (password === confirmation)
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
+          createUser(userCredential.user.uid, userCredential.user.displayName, userCredential.user.email);
           setIsLoading(false);
           onClose();
           router.push("/dashboard");
@@ -121,14 +132,17 @@ export default function GetStartedModal() {
     setGoogleError(null);
     setIsLoadingGoogle(true);
     signInWithPopup(auth, new GoogleAuthProvider())
-      .then((result) => {
+      .then((userCredential) => {
+        createUser(userCredential.user.uid, userCredential.user.displayName, userCredential.user.email);
         setIsLoadingGoogle(false);
         onClose();
         router.push("/dashboard");
       }).catch((error) => {
         if ( error.code == "auth/popup-closed-by-user") {
           setGoogleError("Popup closed by user.");
-        }  else {
+        }  else if (error.code == "auth/network-request-failed") {
+          setGoogleError("Network request failed.");
+        } else {
           setGoogleError(error.message);
         }
         setIsLoadingGoogle(false);
@@ -251,7 +265,7 @@ export default function GetStartedModal() {
                         onClick={googleAuth}
                       >
                         {isLoadingGoogle ? (
-                          <CircularProgress isIndeterminate size="24px" colorScheme="blue" />
+                          <CircularProgress isIndeterminate size="24px" />
                         ) : (
                           'Log in with Google'
                         )}
@@ -362,7 +376,7 @@ export default function GetStartedModal() {
                         onClick={googleAuth}
                       >
                         {isLoadingGoogle ? (
-                          <CircularProgress isIndeterminate size="24px" colorScheme="blue" />
+                          <CircularProgress isIndeterminate size="24px" />
                         ) : (
                           'Sign up with Google'
                         )}
